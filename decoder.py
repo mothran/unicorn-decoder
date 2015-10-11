@@ -9,6 +9,8 @@ class SimpleEngine:
 	def __init__(self, mode):
 		if mode == '32':
 			cur_mode = CS_MODE_32
+		elif mode == '16':
+			cur_mode = CS_MODE_16
 		else:
 			cur_mode = CS_MODE_64
 
@@ -83,7 +85,7 @@ def hook_code(uc, addr, size, user_data):
 def main():
 	parser = argparse.ArgumentParser(description='Decode supplied x86 / x64 shellcode automatically with the unicorn engine')
 	parser.add_argument('-f', dest='file', help='file to shellcode binary file', required=True, type=file)
-	parser.add_argument('-m', dest='mode', help='mode of the emulator (32|64)', required=False, default="32")
+	parser.add_argument('-m', dest='mode', help='mode of the emulator (16|32|64)', required=False, default="32")
 	parser.add_argument('-i', dest='max_instruction', help='max instructions to emulate', required=False)
 	parser.add_argument('-d', dest='debug', help='Enable extra hooks for debugging of shellcode', required=False, default=False, action='store_true')
 
@@ -94,6 +96,8 @@ def main():
 
 	if args.mode == "32":
 		cur_mode = UC_MODE_32
+	elif args.mode == "16":
+		cur_mode = UC_MODE_16
 	else:
 		cur_mode = UC_MODE_64
 
@@ -146,3 +150,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
